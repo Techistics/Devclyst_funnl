@@ -27,7 +27,7 @@ export default function PackageCards({ onSelectPlan }: PackageCardsProps) {
   };
 
   return (
-    <section id="pricing" className="bg-[#F9FAFB] py-[56px] md:py-[80px] px-5 md:px-10">
+    <section id="packages" className="bg-[#F9FAFB] py-[56px] md:py-[80px] px-5 md:px-10">
       <div className="max-w-[860px] mx-auto">
         <div className="text-center mb-12">
           <span className="inline-block rounded-full bg-[#F0FDFA] text-[#134E4A] border border-[#99F6E4] px-3 py-1 text-[12px] font-semibold uppercase tracking-widest mb-4">

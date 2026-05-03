@@ -1,90 +1,187 @@
 "use client";
 
+import { motion } from "framer-motion";
+
 export default function HeroSection() {
+  const scrollToForm = () => {
+    document.getElementById("book-form")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <section className="relative pt-[80px] md:pt-[100px] pb-12 px-5 md:px-10 bg-white overflow-hidden min-h-[90vh] flex items-center justify-center">
+    <section className="relative pt-[40px] md:pt-[60px] pb-16 px-5 md:px-10 bg-white overflow-hidden min-h-0 flex items-center justify-center">
       {/* Grid Background */}
-      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#f3f4f6_1px,transparent_1px),linear-gradient(to_bottom,#f3f4f6_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
+      <div 
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px)`,
+          backgroundSize: "40px 40px",
+          opacity: 0.4,
+        }}
+      />
 
-      {/* Pipeline Visual Line */}
-      <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px bg-gradient-to-b from-[#0D9488]/0 via-[#0D9488]/20 to-[#0D9488]/0 z-0"></div>
-
-      <div className="relative z-10 max-w-[850px] mx-auto text-center flex flex-col items-center">
+      <div className="relative z-10 max-w-[1000px] mx-auto text-center flex flex-col items-center">
         
-        {/* Picture Placeholder - Lifted even higher */}
-        <div className="w-[280px] h-[280px] md:w-[420px] md:h-[400px] mx-auto -mt-[40px] md:-mt-[60px] -mb-[100px] md:-mb-[140px] relative z-0 flex justify-center">
-           {/* Put your image in the public folder as hero-image.png */}
-           <img 
-             src="/hero-image.png" 
-             alt="DevClyst Founders" 
-             className="w-full h-full object-contain object-bottom drop-shadow-2xl"
-             onError={(e) => {
-               // Fallback if the image isn't uploaded yet
-               e.currentTarget.style.display = 'none';
-               e.currentTarget.nextElementSibling?.classList.remove('hidden');
-               e.currentTarget.nextElementSibling?.classList.add('flex');
-             }}
-           />
-           <div className="hidden absolute inset-0 flex-col items-center justify-center border-2 border-dashed border-gray-300 text-gray-400 rounded-t-[100px] md:rounded-t-[200px] bg-white/50 backdrop-blur-sm">
-             <span className="font-medium text-[15px] text-center px-4">
-               📸 Save your transparent picture as<br/>
-               <code className="bg-gray-100 px-2 py-1 rounded mt-2 inline-block text-gray-600">public/hero-image.png</code>
-             </span>
-           </div>
+        {/* 1. Photo Block (Glow + Grid + Floating Cards) */}
+        <div className="relative w-full max-w-[500px] mb-4 flex justify-center items-center overflow-visible">
+          {/* Radial Glow Behind Photo */}
+          <div 
+            className="absolute inset-0 -z-10 translate-y-10"
+            style={{
+              background: "radial-gradient(circle, rgba(13,148,136,0.12) 0%, transparent 70%)",
+            }}
+          />
+          
+          {/* Blurred Circle Background */}
+          <div className="absolute w-[300px] h-[300px] bg-[#0D9488]/[0.08] blur-[60px] rounded-full -z-10" />
+
+          {/* Main Photo */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+            className="relative z-10 w-full"
+          >
+            <img 
+              src="/hero-image.png" 
+              alt="DevClyst Founders" 
+              className="w-full h-auto drop-shadow-2xl object-contain max-h-[280px] md:max-h-[340px]"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+                e.currentTarget.nextElementSibling?.classList.remove('hidden');
+              }}
+            />
+            {/* Fallback placeholder */}
+            <div className="hidden aspect-square w-full bg-gray-50 border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center text-gray-400">
+               <span className="text-sm">Founders Image</span>
+               <code className="text-[10px] mt-2">public/hero-image.png</code>
+            </div>
+          </motion.div>
+
+          {/* Floating Card 1: Top Left */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ 
+              opacity: 1, 
+              x: 0,
+              y: [-6, 6]
+            }}
+            transition={{ 
+              opacity: { duration: 0.5, delay: 0.4, ease: "easeOut" },
+              x: { duration: 0.5, delay: 0.4, ease: "easeOut" },
+              y: { duration: 3, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }
+            }}
+            className="hidden md:flex absolute left-[-60px] top-1/4 z-20 bg-white border border-[#E5E7EB] rounded-[12px] py-[10px] px-[16px] shadow-[0_4px_12px_rgba(0,0,0,0.08)] items-center gap-2 whitespace-nowrap"
+          >
+            <div className="w-5 h-5 rounded-full bg-[#CCFBF1] flex items-center justify-center">
+               <svg className="w-3 h-3 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <span className="text-[13px] font-semibold text-gray-800">50+ Businesses Launched</span>
+          </motion.div>
+
+          {/* Floating Card 2: Bottom Right */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ 
+              opacity: 1, 
+              x: 0,
+              y: [6, -6]
+            }}
+            transition={{ 
+              opacity: { duration: 0.5, delay: 0.4, ease: "easeOut" },
+              x: { duration: 0.5, delay: 0.4, ease: "easeOut" },
+              y: { duration: 3, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }
+            }}
+            className="hidden md:flex absolute right-[-60px] bottom-1/4 z-20 bg-white border border-[#E5E7EB] rounded-[12px] py-[10px] px-[16px] shadow-[0_4px_12px_rgba(0,0,0,0.08)] items-center gap-2 whitespace-nowrap"
+          >
+            <div className="w-5 h-5 rounded-full bg-[#FEF9C3] flex items-center justify-center">
+               <svg className="w-3 h-3 text-[#CA8A04]" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd"></path></svg>
+            </div>
+            <span className="text-[13px] font-semibold text-gray-800">7 Day Delivery</span>
+          </motion.div>
+
+          {/* Floating Card 3: Bottom Left */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ 
+              opacity: 1, 
+              x: 0,
+              y: [4, -4]
+            }}
+            transition={{ 
+              opacity: { duration: 0.5, delay: 0.5, ease: "easeOut" },
+              x: { duration: 0.5, delay: 0.5, ease: "easeOut" },
+              y: { duration: 3, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }
+            }}
+            className="hidden md:flex absolute left-[-60px] bottom-1/4 z-20 bg-white border border-[#E5E7EB] rounded-[12px] py-[10px] px-[16px] shadow-[0_4px_12px_rgba(0,0,0,0.08)] items-center gap-2 whitespace-nowrap"
+          >
+            <div className="w-5 h-5 rounded-full bg-[#FEF9C3] flex items-center justify-center">
+               <svg className="w-3.5 h-3.5 text-[#EAB308]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+            </div>
+            <span className="text-[13px] font-semibold text-gray-800">5★ Client Rating</span>
+          </motion.div>
+
+          {/* Floating Card 4: Top Right */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ 
+              opacity: 1, 
+              x: 0,
+              y: [-4, 4]
+            }}
+            transition={{ 
+              opacity: { duration: 0.5, delay: 0.5, ease: "easeOut" },
+              x: { duration: 0.5, delay: 0.5, ease: "easeOut" },
+              y: { duration: 3, ease: "easeInOut", repeat: Infinity, repeatType: "reverse" }
+            }}
+            className="hidden md:flex absolute right-[-60px] top-1/4 z-20 bg-white border border-[#E5E7EB] rounded-[12px] py-[10px] px-[16px] shadow-[0_4px_12px_rgba(0,0,0,0.08)] items-center gap-2 whitespace-nowrap"
+          >
+            <div className="w-5 h-5 rounded-full bg-[#DCF8C6] flex items-center justify-center">
+               <svg className="w-3.5 h-3.5 text-[#25D366]" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"></path></svg>
+            </div>
+            <span className="text-[13px] font-semibold text-gray-800">WhatsApp Support 24/7</span>
+          </motion.div>
         </div>
 
-        {/* Text Content - Overlapping the picture */}
-        <div className="relative z-10 w-full flex flex-col items-center">
-          <div className="rounded-full bg-white/80 text-[#134E4A] border border-[#99F6E4] px-4 py-1 text-[13px] font-medium mb-4 backdrop-blur-md shadow-sm">
-            🟢 Taking new clients — 7 slots left this month
-          </div>
-          
-          <h1 className="text-[32px] md:text-[56px] font-bold leading-[1.2] text-gray-900 tracking-tight mb-8 max-w-[900px] mx-auto">
-            Bridge the digital gap to <span className="text-[#0D9488]">recapture</span> lost customers.
-          </h1>
-          
-          <p className="text-[18px] md:text-[22px] text-gray-500 font-normal leading-[1.5] max-w-[650px] mx-auto mb-6 bg-white/40 backdrop-blur-[2px] rounded-xl py-1 px-4">
-            We put your business online in 7 days — website, WhatsApp chatbot, Facebook and Instagram pages — completely done for you.
-          </p>
-        
-        <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-10 mb-6 w-full">
-          <div className="text-center">
-            <div className="text-2xl md:text-3xl font-bold text-[#0D9488]">50+</div>
-            <div className="text-[12px] text-gray-500 mt-1 uppercase tracking-wider">Businesses</div>
-          </div>
-          <div className="hidden md:block w-px h-8 bg-gray-200"></div>
-          <div className="text-center">
-            <div className="text-2xl md:text-3xl font-bold text-[#0D9488]">7 Days</div>
-            <div className="text-[12px] text-gray-500 mt-1 uppercase tracking-wider">Delivery</div>
-          </div>
-          <div className="hidden md:block w-px h-8 bg-gray-200"></div>
-          <div className="text-center">
-            <div className="text-2xl md:text-3xl font-bold text-[#0D9488]">Rs. 14,999</div>
-            <div className="text-[12px] text-gray-500 mt-1 uppercase tracking-wider">Starting Price</div>
-          </div>
-        </div>
-
-        <button 
-          onClick={() => {
-            document.getElementById('book-form')?.scrollIntoView({ behavior: 'smooth' });
-          }}
-          className="w-full md:w-auto min-w-[300px] h-[58px] bg-[#0D9488] hover:bg-[#0F766E] text-white rounded-[12px] text-[18px] font-bold tracking-wide transition-all transform hover:-translate-y-[1px] flex items-center justify-center shadow-xl shadow-teal-900/20"
+        {/* 2. H1 Heading */}
+        <motion.h1
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+          className="text-[22px] sm:text-[28px] md:text-[40px] lg:text-[52px] font-bold leading-[1.1] text-gray-900 tracking-tight mb-6 max-w-full"
         >
-          Get Our Free Consultation →
-        </button>
+          Every day offline is a <span className="text-[#0D9488]">lost customer.</span>
+        </motion.h1>
 
-        <p className="text-[13px] text-gray-400 mt-4 text-center">
-          No payment now  ·  15-min WhatsApp call  ·  No commitment
-        </p>
+        {/* 3. Subheadline */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+          className="text-[18px] md:text-[22px] text-gray-500 font-medium leading-[1.5] max-w-[600px] mb-10"
+        >
+          Website. WhatsApp Chatbot. Social Pages.<br className="hidden md:block" /> Done in 7 days.
+        </motion.p>
 
-        <div className="mt-10 w-full max-w-[700px] aspect-video bg-white/80 backdrop-blur-md rounded-2xl border border-gray-200 shadow-[0_8px_32px_rgba(0,0,0,0.10)] overflow-hidden relative group cursor-pointer">
-           {/* Placeholder for demo media */}
-           <div className="absolute inset-0 flex items-center justify-center text-gray-400 group-hover:scale-105 transition-transform duration-500">
-             Video / Mockup Placeholder
-           </div>
-           <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent"></div>
-        </div>
-        </div>
+        {/* 4. CTA Button + Trust Micro-copy */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
+          className="w-full flex flex-col items-center"
+        >
+          <button 
+            onClick={scrollToForm}
+            className="w-full md:w-auto min-w-[320px] h-[64px] bg-[#0D9488] hover:bg-[#0F766E] text-white rounded-[14px] text-[19px] font-bold tracking-wide transition-all transform hover:-translate-y-[2px] flex items-center justify-center shadow-xl shadow-teal-900/20"
+          >
+            Get Our Free Consultation →
+          </button>
+          
+          <p className="text-[13px] text-gray-400 mt-5 font-medium flex items-center gap-2">
+            <svg className="w-4 h-4 text-[#0D9488]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg>
+            No payment now · 15-min WhatsApp call · No commitment
+          </p>
+        </motion.div>
+
       </div>
     </section>
   );

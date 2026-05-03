@@ -1,12 +1,29 @@
 "use client";
 
 export default function TopBar() {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4 pointer-events-none">
       <nav className="bg-white/90 backdrop-blur-md shadow-[0_10px_30px_-5px_rgba(13,148,136,0.12)] border border-gray-100 rounded-full h-[60px] flex items-center justify-between px-6 md:px-10 w-full max-w-[800px] pointer-events-auto">
         <div className="hidden md:flex items-center gap-8 text-[14px] font-medium text-gray-600">
-          <a href="/funnel/step1#pricing" className="hover:text-black transition-colors">Prebuilt</a>
-          <a href="/funnel/step1#portfolio" className="hover:text-black transition-colors">Customized</a>
+          <button 
+            onClick={() => scrollToSection('packages')} 
+            className="hover:text-black transition-colors cursor-pointer font-medium"
+          >
+            Prebuilt
+          </button>
+          <button 
+            onClick={() => scrollToSection('book-form')} 
+            className="hover:text-black transition-colors cursor-pointer font-medium"
+          >
+            Customized
+          </button>
         </div>
         
         <a href="/" className="group flex items-center font-extrabold text-xl tracking-tight flex-shrink-0 mx-auto md:mx-4">
@@ -15,8 +32,20 @@ export default function TopBar() {
         </a>
         
         <div className="hidden md:flex items-center gap-8 text-[14px] font-medium text-gray-600">
-          <a href="/about" className="hover:text-black transition-colors">About Us</a>
-          <a href="/contact" className="hover:text-black transition-colors">Contact Us</a>
+          <button 
+            onClick={() => scrollToSection('how-it-works')} 
+            className="hover:text-black transition-colors cursor-pointer font-medium"
+          >
+            About Us
+          </button>
+          <a 
+            href="https://wa.me/923704640009" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="hover:text-black transition-colors"
+          >
+            Contact Us
+          </a>
         </div>
 
         {/* Mobile Menu Icon Placeholder */}

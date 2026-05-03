@@ -1,6 +1,6 @@
 export default function HowItWorks() {
   return (
-    <section className="bg-[#F9FAFB] py-[56px] md:py-[80px] px-5 md:px-10 overflow-hidden">
+    <section id="how-it-works" className="bg-[#F9FAFB] py-[56px] md:py-[80px] px-5 md:px-10 overflow-hidden">
       <div className="max-w-[1100px] mx-auto text-center">
         <div className="mb-12">
           <span className="inline-block rounded-full bg-[#F0FDFA] text-[#134E4A] border border-[#99F6E4] px-3 py-1 text-[12px] font-semibold uppercase tracking-widest mb-4">
